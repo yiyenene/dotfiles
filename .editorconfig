@@ -1,0 +1,14 @@
+# EditorConfig
+root = true
+
+[{*.rb,*.ru,*.erb,*.slim,*.rake,*.css,*.scss}]
+indent_size = 2
+indent_style = space
+trim_trailing_whitespace = true
+insert_final_newline  = true
+
+[{*.js,*.jsx,*.ts,*.tsx}]
+indent_size = 4
+indent_style = space
+trim_trailing_whitespace = true
+insert_final_newline  = true
