@@ -46,13 +46,24 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (git-gutter magit projectile-rails helm-projectile projectile flycheck inf-ruby ruby-electric yaml-mode js2-mode sass-mode web-mode undo-tree undohist helm-c-moccur auto-complete helm init-loader))))
+    (robe git-gutter magit projectile-rails helm-projectile projectile flycheck inf-ruby ruby-electric yaml-mode js2-mode sass-mode web-mode undo-tree undohist helm-c-moccur auto-complete helm init-loader)))
+ '(ruby-insert-encoding-magic-comment nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(require 'cl)
+(let ((not-installed
+       (loop for x in package-selected-packages
+             when (not (package-installed-p x)) collect x)))
+  (when not-installed
+    (package-refresh-contents)
+    (dolist
+        (pkg not-installed)
+        (package-install pkg))))
 
 (require 'helm-config)
 
@@ -95,6 +106,8 @@
 ;; ruby-electric
 (add-hook  'ruby-mode-hook #'ruby-electric-mode)
 
+
+
 ;; flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
@@ -120,3 +133,6 @@
 ;; git-gutter
 (when (require 'git-gutter nil t)
   (global-git-gutter-mode t))
+
+(add-hook 'ruby-mode-hook 'robe-mode)
+(add-hook 'robe-mode 'ac-robe-setup)
